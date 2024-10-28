@@ -1,10 +1,10 @@
 import { Text, View } from '@/components/Themed';
 import { StyleSheet } from 'react-native';
 
-export default function TabTwoScreen() {
+export default function LoginScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
+      <Text style={styles.title}>Login</Text>
     </View>
   );
 }
