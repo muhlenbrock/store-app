@@ -23,7 +23,7 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
   return (
     <View
       style={[
-        styles.container,
+        s.container,
         {
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
@@ -45,7 +45,7 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'

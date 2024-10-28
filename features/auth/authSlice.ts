@@ -5,7 +5,8 @@ const API_URL = 'https://fakestoreapi.com/auth';
 
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
-  async (data: { username: string; password: string }) => {
+  async (data: { username: string; password: string }, {rejectWithValue}) => {
+    try {
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -13,6 +14,13 @@ export const loginUser = createAsyncThunk(
     };
     const response = await axios.post(`${API_URL}/login`, data, config);
     return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.data) {
+      return rejectWithValue(error.response.data)
+    } else {
+      return rejectWithValue(error.message)
+    }
+  }
   }
 );
 
@@ -36,15 +44,18 @@ const authSlice = createSlice({
     builder
       .addCase(loginUser.pending, (state, action) => {
         state.userLogin.loading = true;
+        state.userLogin.error = null;
+
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.userLogin.data = action.payload;
         state.userLogin.loading = false;
+        state.userLogin.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.userLogin.data = initialState.userLogin.data;
         state.userLogin.loading = false;
-        state.userLogin.error = action.error.message ?? 'Unknown Error';
+        state.userLogin.error = action.payload ?? 'Unknown Error';
       });
   }
 });
@@ -54,3 +65,4 @@ export default authSlice.reducer;
 
 export const userLoginData = (state: RootState) => state.auth?.userLogin.data;
 export const userLoginLoading = (state: RootState) => state.auth?.userLogin.loading;
+export const userLoginError = (state: RootState) => state.auth?.userLogin.error;

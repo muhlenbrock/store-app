@@ -1,8 +1,10 @@
+import ErrorFallbackComponent from '@/components/ErrorFallback/ErrorFallback';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import { primaryColor } from '@/constants/Colors';
 import {
   fetchProducts,
   productListData,
+  productListError,
   productListLoading
 } from '@/features/products/productSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooksRedux';
@@ -25,6 +27,7 @@ export default function HomeScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
   const productList = useAppSelector(productListData);
   const productListLoadingState = useAppSelector(productListLoading);
+  const productListErrorState = useAppSelector(productListError);
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
@@ -35,7 +38,6 @@ export default function HomeScreen({ navigation }: Props) {
         s.container,
         {
           paddingTop: insets.top,
-          paddingBottom: insets.bottom,
           paddingLeft: insets.left,
           paddingRight: insets.right
         }
@@ -43,7 +45,7 @@ export default function HomeScreen({ navigation }: Props) {
     >
       <View style={s.header}>
         <View style={{ flex: 1 }}>
-          <Text style={s.title}>{productList.length} Productos</Text>
+          <Text style={s.title}>{productList?.length || 0} Productos</Text>
           <Text style={s.subtitle}>Pensados en tus gustos</Text>
         </View>
 
@@ -56,6 +58,13 @@ export default function HomeScreen({ navigation }: Props) {
           </TouchableOpacity>
         </View>
       </View>
+      {productListErrorState && (
+        <ErrorFallbackComponent
+          resetError={() => {
+            dispatch(fetchProducts());
+          }}
+        />
+      )}
       {productListLoadingState ? (
         <View style={s.loadingContainer}>
           <ActivityIndicator size="large" color={primaryColor} />
