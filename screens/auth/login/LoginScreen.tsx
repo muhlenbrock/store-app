@@ -9,6 +9,8 @@ import { s } from './LoginStyle';
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [usernameValid, setUsernameValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const userLoginLoadingState = useAppSelector(userLoginLoading);
@@ -25,6 +27,9 @@ export default function LoginScreen() {
       <View style={s.inputContainer}>
         <Text style={s.label}>Username</Text>
         <TextInput style={s.input} value={username} onChangeText={setUsername} />
+        {!usernameValid && (
+          <Text style={s.validateInput}>Username no puede tener menos de 3 caracteres</Text>
+        )}
       </View>
 
       <View style={s.inputContainer}>
@@ -40,16 +45,25 @@ export default function LoginScreen() {
             <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={24} color={primaryColor} />
           </TouchableOpacity>
         </View>
+        {!passwordValid && (
+          <Text style={s.validateInput}>Password no puede tener menos de 3 caracteres</Text>
+        )}
       </View>
-      {userLoginErrorState && <Text style={{ color: 'red' }}>{userLoginErrorState} </Text>}
+      {passwordValid && usernameValid && userLoginErrorState && (
+        <Text style={{ color: 'red' }}>{userLoginErrorState} </Text>
+      )}
       <TouchableOpacity
         style={s.loginButton}
         onPress={() => {
-          const data = {
-            username,
-            password
-          };
-          dispatch(loginUser(data));
+          setPasswordValid(password.length > 2);
+          setUsernameValid(username.length > 2);
+          if (password.length > 2 && username.length > 2) {
+            const data = {
+              username,
+              password
+            };
+            dispatch(loginUser(data));
+          }
         }}
         disabled={userLoginLoadingState}
       >
