@@ -22,5 +22,9 @@ export const s = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'flex-end',
       gap: 16
-    }
+    },
+    loadingContainer: {
+      flex: 1,
+      marginTop:100
+    },
   });

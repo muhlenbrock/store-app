@@ -66,7 +66,8 @@ export const s = StyleSheet.create({
   loginButtonText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    paddingRight: 10
   },
   forgotPasswordContainer: {
     flexDirection: 'row',

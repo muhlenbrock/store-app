@@ -1,9 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { logout } from '@/features/auth/authSlice';
+import { useAppDispatch } from '@/hooks/hooksRedux';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function ProfileScreen() {
+  const dispatch = useAppDispatch();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
+      <TouchableOpacity
+        onPress={() => {
+          dispatch(logout());
+        }}
+      >
+        <Text style={styles.title}>Logout Profile</Text>
+      </TouchableOpacity>
     </View>
   );
 }

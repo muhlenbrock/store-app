@@ -1,6 +1,7 @@
+import { userLoginData } from '@/features/auth/authSlice';
+import { useAppSelector } from '@/hooks/hooksRedux';
 import LoginScreen from '@/screens/auth/login/LoginScreen';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
@@ -19,14 +20,13 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font
   });
-
+  const userLogin = useAppSelector(userLoginData);
   useEffect(() => {
-    const checkToken = async () => {
-      const token = await AsyncStorage.getItem('userToken');
-      setIsAuthenticated(!!token); // Set to true if token exists
+    const checkToken = () => {
+      setIsAuthenticated(!!userLogin.token); // Set to true if token exists
     };
     checkToken();
-  }, []);
+  }, [userLogin.token]);
 
   useEffect(() => {
     if (loaded) {
@@ -41,7 +41,7 @@ export default function RootLayout() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {!isAuthenticated ? (
+        {isAuthenticated ? (
           <Stack.Screen name="BottomMainTab" component={BottomMainTab} />
         ) : (
           <Stack.Screen name="Login" component={LoginScreen} />
