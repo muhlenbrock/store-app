@@ -1,13 +1,17 @@
 import { primaryColor } from '@/constants/Colors';
+import { loginUser, userLoginLoading } from '@/features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooksRedux';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { s } from './LoginStyle';
 
 export default function LoginScreen() {
-  const [username, setUsername] = useState('kevinhard');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('mor_2314');
+  const [password, setPassword] = useState('83r5^_');
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useAppDispatch();
+  const userLoginLoadingState = useAppSelector(userLoginLoading);
 
   return (
     <View style={s.container}>
@@ -37,8 +41,21 @@ export default function LoginScreen() {
         </View>
       </View>
 
-      <TouchableOpacity style={s.loginButton}>
-        <Text style={s.loginButtonText}>Login</Text>
+      <TouchableOpacity
+        style={s.loginButton}
+        onPress={() => {
+          const data = {
+            username,
+            password
+          };
+          dispatch(loginUser(data));
+        }}
+        disabled={userLoginLoadingState}
+      >
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={s.loginButtonText}>Login</Text>
+          {userLoginLoadingState && <ActivityIndicator size="small" color="#fff" />}
+        </View>
       </TouchableOpacity>
 
       <View style={s.forgotPasswordContainer}>
