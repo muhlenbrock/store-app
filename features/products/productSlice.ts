@@ -32,6 +32,7 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.productList.loading = false;
         state.productList.error = action.error.message ?? 'Unknown Error';
+        state.productList.data = [];
       });
   }
 });
@@ -40,3 +41,4 @@ export default productSlice.reducer;
 
 export const productListData = (state: RootState) => state.product?.productList.data;
 export const productListLoading = (state: RootState) => state.product?.productList.loading;
+export const productListError = (state: RootState) => state.product?.productList.error;

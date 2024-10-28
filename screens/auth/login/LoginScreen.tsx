@@ -1,5 +1,5 @@
 import { primaryColor } from '@/constants/Colors';
-import { loginUser, userLoginLoading } from '@/features/auth/authSlice';
+import { loginUser, userLoginError, userLoginLoading } from '@/features/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooksRedux';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
@@ -7,11 +7,12 @@ import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity, View } fro
 import { s } from './LoginStyle';
 
 export default function LoginScreen() {
-  const [username, setUsername] = useState('mor_2314');
-  const [password, setPassword] = useState('83r5^_');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const userLoginLoadingState = useAppSelector(userLoginLoading);
+  const userLoginErrorState = useAppSelector(userLoginError);
 
   return (
     <View style={s.container}>
@@ -40,7 +41,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
       </View>
-
+      {userLoginErrorState && <Text style={{ color: 'red' }}>{userLoginErrorState} </Text>}
       <TouchableOpacity
         style={s.loginButton}
         onPress={() => {
