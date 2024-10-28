@@ -96,5 +96,6 @@ export const s = StyleSheet.create({
     color: primaryColor,
     fontSize: 16,
     fontWeight: 'bold'
-  }
+  },
+  validateInput: { position: 'absolute', bottom: -20, color: 'red' }
 });
