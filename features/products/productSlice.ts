@@ -24,6 +24,7 @@ const productSlice = createSlice({
     builder
       .addCase(fetchProducts.pending, (state, action) => {
         state.productList.loading = true;
+        state.productList.error = null;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.productList.data = action.payload;

@@ -19,13 +19,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.muhlenbrock.storeapp"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "60df7cb9-5e39-4ed2-aad8-fac10676ff6e"
+      }
     }
   }
 }
