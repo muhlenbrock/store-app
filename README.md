@@ -30,7 +30,10 @@ Para este proyecto se realizaron distintas tareas las cuales fueron:
   ```
   https://fakestoreapi.com/
   ```
-
+- Dejo un build de android creado en eas
+  
+  [APK](https://expo.dev/artifacts/eas/fromCzUQzeByYd23K8q6LV.apk)
+  
 ## Releases
 
 - [v1.1.0](https://github.com/muhlenbrock/store-app/releases/tag/1.1.0)
